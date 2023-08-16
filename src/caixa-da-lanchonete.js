@@ -6,6 +6,8 @@ class CaixaDaLanchonete {
   taxa_array = [0.03];
 
   itensExtra_array = ["chantily", "queijo"];
+  
+  itensPrincipais_array = ["cafe","sanduiche"];
 
   itens = {
     cafe: { descricao: "Café", valor: 3.0 },
@@ -21,51 +23,43 @@ class CaixaDaLanchonete {
   calcularValorDaCompra(metodoDePagamento, itens) {
     let total = 0;
     let Quantidadeitens = 0;
-    let itensExtra = this.itensExtra_array;
-    let carrinho = 0;
 
-    if (itens.length < 1) {
+    if(itens.length < 1) {
       return "Não há itens no carrinho de compra!";
     }
 
-    for (const itemCodigo in itens) {
-      if (this.itens.hasOwnProperty(itemCodigo)) {
-        total += this.itens[itemCodigo].valor * itens[itemCodigo];
-      } else {
-        return "Item inválido!";
-      }
-    }
-
-    for (const Quantidadeitens in itens) {
-      if (Quantidadeitens >= 1) {
-        continue;
-      } else {
+    if(Quantidadeitens.length < 1) {
         return "Quantidade inválida!";
-      }
-    }
+    }  
 
-    for (const itensExtra in itens) {
-      if (itensExtra[0] + itens[cafe]) {
-        continue;
-      } else if (itensExtra[1] + itens[sanduiche]) {
-        continue;
-      } else {
+    if(this.itensExtra_array.length > 1 && this.itensPrincipais_array[0]||[1]) {
         return "Item extra não pode ser pedido sem o principal";
-      }
     }
+    
+    if(this.itensExtra_array.length >= 1 && this.itensPrincipais_array.length === 1){}
 
     if (metodoDePagamento == this.pagamento_array[0]) {
-      total *= 1 + this.desconto_array[0];
+      total *= 0.95;
     } else if (metodoDePagamento == this.pagamento_array[2]) {
-      total *= 1 + this.taxa_array[0];
-    } else if (metodoDePagamento == this.pagamento_array[1]) {
-      total *= 1;
+      total *= 1.03;
+    }
+      else if (metodoDePagamento == this.pagamento_array[1]){
+        total *= 1;
     } else {
       return "Forma de Pagamento Inválida";
+    }
+
+    for (const itemCodigo in itens) {
+      if (itemCodigo.itens) {
+        total += this.itens[itemCodigo].valor * itens[itemCodigo];
+      }
+        else{
+        return "Item inválido!";
+      }
     }
 
     return total.toFixed(2);
   }
 }
-
+  
 export { CaixaDaLanchonete };
